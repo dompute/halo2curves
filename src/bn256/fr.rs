@@ -285,6 +285,53 @@ mod test {
     use rand_xorshift::XorShiftRng;
 
     #[test]
+    fn test_sub() {
+        for _ in 0..10 {
+            let a = Fr::random(OsRng);
+            let b = Fr::random(OsRng);
+            let c = a + b;
+
+            println!("a: {:?}, b: {:?}, c: {:?}", a, b, c);
+            assert_eq!(c - b, a);
+        }
+    }
+
+    #[test]
+    fn test_neg() {
+        for _ in 0..10 {
+            let a = Fr::random(OsRng);
+            let b = -a;
+
+            println!("a: {:?}, b: {:?}", a, b);
+            assert_eq!(a + b, Fr::zero());
+        }
+        assert_eq!(Fr::zero(), -Fr::zero());
+    }
+
+    #[test]
+    fn test_square() {
+        for _ in 0..5 {
+            let a = Fr::random(OsRng);
+            let b = a.square();
+
+            println!("a: {:?}, b: {:?}", a, b);
+        }
+    }
+
+    #[test]
+    fn test_mul() {
+        for _ in 0..5 {
+            let a = Fr::random(OsRng);
+            let b = Fr::random(OsRng);
+            let c = a * b;
+
+            println!("a: {:?}", a);
+            println!("b: {:?}", b);
+            println!("c: {:?}", c);
+        }
+    }
+
+    #[test]
     fn test_sqrt() {
         let v = (Fr::TWO_INV).square().sqrt().unwrap();
         assert!(v == Fr::TWO_INV || (-v) == Fr::TWO_INV);
